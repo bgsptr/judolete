@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
 
-	"github.com/bgsptr/judolete/internal/handler"
-	"github.com/bgsptr/judolete/internal/router"
-	"github.com/bgsptr/judolete/internal/service"
+	"judolete/internal/handler"
+	"judolete/internal/router"
+	"judolete/internal/service"
 )
 
 type BootstrapConfig struct {

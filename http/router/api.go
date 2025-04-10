@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/bgsptr/judolete/internal/handler"
+	"judolete/internal/handler"
 )
 
 type APIConfig struct {
