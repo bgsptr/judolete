@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"judolete/internal/handler"
+	"judolete/http/handler"
 )
 
 type APIConfig struct {
@@ -25,16 +25,17 @@ func (a *APIConfig) DefineAllRoutes() {
 	authRouter := a.Route.Group("/auth")
 	{
 		authRouter.POST("/token/callback", a.AuthController.GetToken)
-		authRouter.GET("/", a.AuthController.GetAuthURL)
+		authRouter.GET("/", a.AuthController.RedirectToAuthURL)
 	}
 
-	youtubeRouter := a.Route.Group("/youtube")
-	{
-		youtubeRouter.GET("/", a.YoutubeController.Init)
-	}
+	// youtubeRouter := a.Route.Group("/youtube")
+	// {
+		// youtubeRouter.GET("/", a.YoutubeController.Init)
+	// }
 
 	commentRouter := a.Route.Group("/comment")
 	{
-		commentRouter.DELETE("/:id", a.CommentController.Delete)
+		commentRouter.DELETE("/video/:videoId", a.CommentController.Delete)
+		commentRouter.POST("/", a.CommentController.FindAllCommentController)
 	}
 }

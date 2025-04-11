@@ -1,10 +1,14 @@
 package service
 
-type TokenService struct {
+import (
 	"context"
 	"log"
 
 	"golang.org/x/oauth2"
+)
+
+type TokenService struct {
+	OAuthGoogleConfig *oauth2.Config
 }
 
 func NewTokenService(oauth *oauth2.Config) *TokenService {

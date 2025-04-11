@@ -4,19 +4,19 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
 
-	"judolete/internal/handler"
-	"judolete/internal/router"
+	"judolete/http/handler"
+	"judolete/http/router"
 	"judolete/internal/service"
 )
 
 type BootstrapConfig struct {
-	OAuthGoogle *oauth2.Config
+	OAuthGoogleConfig *oauth2.Config
 }
 
 func Bootstrap(config *BootstrapConfig, r *gin.Engine) {
 	youtubeService := service.NewYoutubeService(config.OAuthGoogleConfig)
 	tokenService := service.NewTokenService(config.OAuthGoogleConfig)
-	commentService := service.NewCommentService(youtubeService.YoutubeClient)
+	commentService := service.NewCommentService(youtubeService)
 
 	youtubeController := handler.NewYoutubeController(youtubeService)
 	authController := handler.NewAuthController(tokenService)

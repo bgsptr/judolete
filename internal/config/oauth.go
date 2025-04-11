@@ -1,7 +1,7 @@
 package config
 
 import (
-	"context"
+	// "context"
 	"log"
 	"os"
 
@@ -10,7 +10,7 @@ import (
 )
 
 func NewOAuthGoogle(credentialPath string) *oauth2.Config {
-	ctx := context.Background()
+	// ctx := context.Background()
 
 	b, err := os.ReadFile(credentialPath)
 	if err != nil {

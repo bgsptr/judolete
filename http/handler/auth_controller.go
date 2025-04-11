@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"log"
 	"net/http"
+	"encoding/json"
 
 	"github.com/gin-gonic/gin"
 	"judolete/internal/service"
@@ -21,21 +21,26 @@ func NewAuthController(tokenService *service.TokenService) *AuthController {
 func (a *AuthController) RedirectToAuthURL(c *gin.Context) {
 	url := a.TokenService.GetAuthURL()
 
-	c.JSON(200, h.Message{"url": url})
+	c.JSON(200, gin.H{"url": url})
 }
 
 func (a *AuthController) GetToken(c *gin.Context) {
-	authCode, err := c.GetQuery("code")
-	if err != nil {
-		log.Println("can't find code from auth url")
-		return err
-	}
+	authCode, _ := c.GetQuery("code")
+	// if err != nil {
+	// 	log.Println("can't find code from auth url")
+	// }
 
 	token := a.TokenService.FetchTokenFromCallback(authCode);
 
+	tokenJson, err := json.Marshal(token)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to serialize token"})
+		return
+	}
+
 	c.SetCookie(
 		"token",
-		token,
+		string(tokenJson),
 		3600 * 24,
 		"/",
 		"localhost",
